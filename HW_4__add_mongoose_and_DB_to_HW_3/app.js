@@ -5,7 +5,6 @@ const apiRouter = require('./routers/api.routers');
 
 const app = express();
 
-// eslint-disable-next-line no-use-before-define
 _connectDB();
 
 app.use(express.json());
