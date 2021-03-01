@@ -72,11 +72,20 @@ module.exports = {
     en: 'Name cannot be a number',
     ua: 'Ім\'я користувача не може бути числом'
   },
-
+  //
+  NOT_VALID_MODEL: {
+    en: 'Model cannot be a number',
+    ua: 'Модель автомобіля не може бути числом'
+  },
   //
   NAME_IS_EMPTY: {
     en: 'Name cannot be empty',
     ua: 'Ім\'я користувача не може бути порожнім'
+  },
+  //
+  MODEL_IS_EMPTY: {
+    en: 'Model cannot be empty',
+    ua: 'Модель автомобіля не може бути порожнім'
   },
 
   //

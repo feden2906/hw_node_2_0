@@ -1,5 +1,6 @@
 const User = require('../dataBase/models/User');
 const statusMessages = require('../constants/statusMessages');
+require('../dataBase/models/Car');
 
 module.exports = {
   findAllUsers: async (prefLang) => {
