@@ -23,17 +23,7 @@ module.exports = {
     throw new Error(statusMessages.USER_NOT_FOUND[prefLang]);
   },
 
-  createUser: async (userObject) => { // TODO   Не зрозумів як додати перевірку на унікальність емейлу
-    // const user = User.find({ email: userObject.email })
-    //
-    // if (user) {
-    //   throw new Error(statusMessages.USER_IS_EXISTS[prefLang]);
-    // }
+  createUser: (userObject) => User.create(userObject),
 
-    await User.create(userObject);
-  },
-
-  deleteUser: async (userID) => {
-    await User.findByIdAndDelete(userID);
-  }
+  deleteUser: (userID) => User.findByIdAndDelete(userID)
 };
