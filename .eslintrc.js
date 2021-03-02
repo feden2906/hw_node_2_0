@@ -39,7 +39,11 @@ module.exports = {
     indent: [
       'warn',
       2,
-      { SwitchCase: 1 },
+      {
+        MemberExpression: 2,
+        SwitchCase: 1,
+        VariableDeclarator: 2
+      },
     ],
     'max-classes-per-file': 'off',
     'newline-per-chained-call': 'error',
@@ -108,7 +112,10 @@ module.exports = {
       'error',
       { varsIgnorePattern: 'ctx' },
     ],
-    'no-use-before-define': 'error',
+    'no-use-before-define': [
+      'error',
+      { functions: false }
+    ],
     'no-useless-call': 'error',
     'no-useless-concat': 'error',
     'no-useless-return': 'error',
