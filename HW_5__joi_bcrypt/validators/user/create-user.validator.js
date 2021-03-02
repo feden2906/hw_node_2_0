@@ -18,8 +18,8 @@ module.exports = Joi.object({
       .regex(regexpEnum.PASSWORD_REGEXP),
   yearBorn: Joi
       .number()
-      .min(constants.CURRENT_YEAR - 18)
-      .max(constants.CURRENT_YEAR - 100),
+      .min(constants.CURRENT_YEAR - 100)
+      .max(constants.CURRENT_YEAR - 18),
   cars: Joi
       .array()
 });
