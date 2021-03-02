@@ -93,4 +93,9 @@ module.exports = {
     en: 'Age too small',
     ua: 'Підрости, сосунець!'
   },
+
+  WRONG_EMAIL_OR_PASSWORD: {
+    en: 'wrong email or password',
+    ua: 'Невірний логін або пароль'
+  },
 };

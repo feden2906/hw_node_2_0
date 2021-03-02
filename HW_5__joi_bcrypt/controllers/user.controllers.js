@@ -1,5 +1,6 @@
-const { userService } = require('../services');
+const { passwordHasher } = require('../helpers');
 const { statusCodes, statusMessages } = require('../constants');
+const { userService } = require('../services');
 
 module.exports = {
   getAllUsers: async (req, res) => {
@@ -28,9 +29,11 @@ module.exports = {
 
   createUser: async (req, res) => {
     try {
-      const { body, query: { prefLang = 'en' } } = req;
+      const { body, body: { password }, query: { prefLang = 'en' } } = req;
 
-      await userService.createUser(body, prefLang);
+      const hashPassword = await passwordHasher.hash(password);
+
+      await userService.createUser({ ...body, password: hashPassword }, prefLang);
 
       res.status(statusCodes.CREATED).json(statusMessages.USER_IS_CREATED[prefLang]);
     } catch (e) {
