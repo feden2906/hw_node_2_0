@@ -15,6 +15,19 @@ module.exports = {
     }
   },
 
+  // const userById = async (req,  res, next, id) => {
+  //   try {
+  //     let user = await User.findById(id)
+  //     if (!user){
+  //       return res.status(400).json({error: "User not found"})
+  //     }
+  //     req.profile = user
+  //     next()
+  //   } catch (err) {
+  //     return res.status(400).json({error: 'Could not retrieve user'})
+  //   }
+  // }
+
   getUserById: async (req, res) => {
     try {
       const { params: { userID }, query: { prefLang = 'en' } } = req;
@@ -62,6 +75,18 @@ module.exports = {
       await userService.deleteUser(userID);
 
       res.json(statusMessages.USER_WAS_DELETED[prefLang]);
+    } catch (e) {
+      res.status(statusCodes.BAD_REQUEST).json(e.message);
+    }
+  },
+
+  authUser: async (req, res) => {
+    try {
+      const { body: { password }, query: { prefLang = 'en' }, profile } = req;
+
+      await passwordHasher.compare(password, profile.password, prefLang);
+
+      res.json(statusMessages.AUTH_USER[prefLang]);
     } catch (e) {
       res.status(statusCodes.BAD_REQUEST).json(e.message);
     }
