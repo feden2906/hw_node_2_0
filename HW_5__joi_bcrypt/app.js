@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const { apiRouter } = require('./routers');
+const { config: { PORT, MONGO_URL } } = require('./configs');
 
 const app = express();
 
@@ -11,18 +12,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', apiRouter);
 
-app.listen(5000, () => {
-  console.log('server started');
+app.listen(PORT, () => {
+  console.log(`server started to ${PORT}`);
 });
 
 function _connectDB() {
-  mongoose.connect('mongodb://localhost:27017/users_cars', { useNewUrlParser: true, useUnifiedTopology: true });
+  mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
   const { connection } = mongoose;
 
   connection.on('error', (error) => {
     if (error) {
-      console.log(error);
+      console.error(error);
     }
   });
 }

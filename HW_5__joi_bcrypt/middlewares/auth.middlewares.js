@@ -2,7 +2,7 @@ const { statusCodes, statusMessages } = require('../constants');
 const { User } = require('../models');
 
 module.exports = {
-  isUserExact: async (req, res, next) => {
+  isUserExist: async (req, res, next) => {
     try {
       const { body: { email }, query: { prefLang = 'en' } } = req;
 
