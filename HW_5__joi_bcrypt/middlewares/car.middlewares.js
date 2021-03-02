@@ -1,5 +1,7 @@
 const { statusCodes, statusMessages } = require('../constants');
 
+const { carValidators } = require('../validators');
+
 module.exports = {
   isModelVal: (req, res, next) => {
     try {
@@ -17,19 +19,5 @@ module.exports = {
     } catch (e) {
       res.status(statusCodes.BAD_REQUEST).json(e.message);
     }
-  },
-
-  isIdVal: (req, res, next) => {
-    try {
-      const { params: { carID }, query: { prefLang = 'en' } } = req;
-
-      if (carID > 24 || carID < 24) {
-        throw new Error(statusMessages.NOT_VALID_ID[prefLang]);
-      }
-
-      next();
-    } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
-    }
-  },
+  }
 };
