@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 
+const { dataBaseTable: { USER, CAR } } = require('../constants');
+
 const userSchema = new Schema({
   name: { type: String, required: true },
   password: { type: String, required: true },
@@ -10,7 +12,7 @@ const userSchema = new Schema({
 }, { timestamps: true, toObject: { virtuals: true }, toJSON: { virtuals: true } });
 
 userSchema.virtual('userCars', {
-  ref: 'Car',
+  ref: CAR,
   localField: 'cars',
   foreignField: '_id',
 });
@@ -23,4 +25,4 @@ userSchema
       this.populate('userCars');
     });
 
-module.exports = model('User', userSchema);
+module.exports = model(USER, userSchema);
