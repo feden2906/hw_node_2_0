@@ -33,9 +33,23 @@ module.exports = {
 
       const hashPassword = await passwordHasher.hash(password);
 
-      await userService.createUser({ ...body, password: hashPassword }, prefLang);
+      await userService.createUser({ ...body, password: hashPassword });
 
       res.status(statusCodes.CREATED).json(statusMessages.USER_IS_CREATED[prefLang]);
+    } catch (e) {
+      res.status(statusCodes.BAD_REQUEST).json(e.message);
+    }
+  },
+
+  updateUser: async (req, res) => {
+    try {
+      const { body, body: { password }, params: { userID }, query: { prefLang = 'en' } } = req;
+
+      const hashPassword = await passwordHasher.hash(password);
+
+      await userService.updateUser(userID, { ...body, password: hashPassword });
+
+      res.json(statusMessages.USER_WAS_UPDATE[prefLang]);
     } catch (e) {
       res.status(statusCodes.BAD_REQUEST).json(e.message);
     }

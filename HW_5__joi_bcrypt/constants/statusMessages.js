@@ -98,4 +98,14 @@ module.exports = {
     en: 'wrong email or password',
     ua: 'Невірний логін або пароль'
   },
+
+  USER_WAS_UPDATE: {
+    en: 'User was updated',
+    ua: 'Дані користувача оновлено'
+  },
+
+  AUTH_USER: {
+    en: 'User was authorization',
+    ua: 'Користувача залогінено'
+  },
 };

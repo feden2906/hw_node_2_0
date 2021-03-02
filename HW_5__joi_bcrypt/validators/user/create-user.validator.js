@@ -16,6 +16,9 @@ module.exports = Joi.object({
   password: Joi
       .string()
       .regex(regexpEnum.PASSWORD_REGEXP),
+  phone: Joi
+      .string()
+      .regex(regexpEnum.PHONE_REGEXP),
   yearBorn: Joi
       .number()
       .min(constants.CURRENT_YEAR - 100)
