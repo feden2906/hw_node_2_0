@@ -2,7 +2,7 @@ const User = require('../models/User');
 require('../models/Car');
 
 module.exports = {
-  findAllUsers: () => User.find(),
+  findAllUsers: (rest) => User.find(rest),
 
   findUserById: (userID) => User.findById(userID),
 
