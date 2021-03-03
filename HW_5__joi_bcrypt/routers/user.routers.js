@@ -1,19 +1,19 @@
 const router = require('express').Router();
 
 const { userControllers } = require('../controllers');
-const { mwUser } = require('../middlewares');
+const { mwUser, mwUrl } = require('../middlewares');
 
 router.route('/')
-    .get(userControllers.getAllUsers)
-    .post(mwUser.isUserExist, mwUser.isUserVal, userControllers.createUser);
+    .get(mwUrl.checkQuery, userControllers.getAllUsers)
+    .post(mwUrl.checkQuery, mwUser.isUserExist, mwUser.isUserVal, userControllers.createUser);
 
 router.route('/login')
-    .post(mwUser.isUserExistForAuth, userControllers.authUser);
+    .post(mwUrl.checkQuery, mwUser.isUserExistForAuth, userControllers.authUser);
 
 router.route('/:userID')
-    .get(userControllers.getUserById)
-    .put(mwUser.isUserVal, userControllers.updateUser)
-    .delete(userControllers.deleteUser);
+    .get(mwUrl.checkQuery, userControllers.getUserById)
+    .put(mwUrl.checkQuery, mwUser.isUserVal, userControllers.updateUser)
+    .delete(mwUrl.checkQuery, userControllers.deleteUser);
 
 router.param('userID', mwUser.findUserById);
 

@@ -8,6 +8,8 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   phone: { type: String },
   yearBorn: { type: Number },
+  isMarried: { type: Boolean, required: true },
+  gender: { type: String, required: true },
   cars: [{ type: Schema.Types.ObjectId }]
 }, { timestamps: true, toObject: { virtuals: true }, toJSON: { virtuals: true } });
 
