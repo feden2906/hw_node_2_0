@@ -1,10 +1,17 @@
 const statusCodes = require('../constants/statusCodes.enum');
 const statusMessages = require('../constants/statusMessages');
+const User = require('../dataBase/models/User');
 
 module.exports = {
-  isNameVal: (req, res, next) => {
+  isNameVal: async (req, res, next) => {
     try {
-      const { body: { name }, query: { prefLang = 'en' } } = req;
+      const { body: { name, email }, query: { prefLang = 'en' } } = req;
+
+      const user = await User.findOne({ email });
+
+      if (user) {
+        throw new Error(statusMessages.USER_IS_EXISTS[prefLang]);
+      }
 
       if (!name) {
         throw new Error(statusMessages.NAME_IS_EMPTY[prefLang]);

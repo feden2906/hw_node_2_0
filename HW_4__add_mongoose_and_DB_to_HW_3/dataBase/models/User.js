@@ -15,11 +15,11 @@ userSchema.virtual('userCars', {
 });
 
 userSchema
-  .pre('find', function() {
-    this.populate('userCars');
-  })
-  .pre('findOne', function() {
-    this.populate('userCars');
-  });
+    .pre('find', function() {
+      this.populate('userCars');
+    })
+    .pre('findOne', function() {
+      this.populate('userCars');
+    });
 
 module.exports = model('User', userSchema);
