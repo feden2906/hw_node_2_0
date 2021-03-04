@@ -1,11 +1,9 @@
 const router = require('express').Router();
 
 const { authControllers } = require('../controllers');
-const { mwUser, mwUrl } = require('../middlewares');
+const { mwAuth, mwUrl } = require('../middlewares');
 
 router.route('/')
-    .post(mwUrl.checkQuery, mwUser.isUserExistForAuth, authControllers);
-
-router.param('userID', mwUser.findUserById);
+    .post(mwUrl.checkQuery, mwAuth.isUserExistForAuth, authControllers.authUser);
 
 module.exports = router;
