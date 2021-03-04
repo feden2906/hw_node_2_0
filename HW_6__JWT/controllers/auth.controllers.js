@@ -1,5 +1,6 @@
-const { passwordHasher } = require('../helpers');
+const { passwordHasher, tokenizer } = require('../helpers');
 const { statusCodes, statusMessages } = require('../constants');
+const { authService } = require('../services');
 
 module.exports = {
   authUser: async (req, res) => {
@@ -8,7 +9,11 @@ module.exports = {
 
       await passwordHasher.compare(password, profile.password, prefLang);
 
-      res.json(statusMessages.AUTH_USER[prefLang]);
+      const tokens = tokenizer();
+
+      await authService.saveTokenToBD(tokens, profile._id);
+
+      res.json(tokens);
     } catch (e) {
       res.status(statusCodes.BAD_REQUEST).json(e.message);
     }

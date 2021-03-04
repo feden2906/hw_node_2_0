@@ -108,4 +108,14 @@ module.exports = {
     en: 'User was authorization',
     ua: 'Користувача залогінено'
   },
+
+  TOKEN_IS_REQUIRED: {
+    en: 'Token is required',
+    ua: 'Token відсутній'
+  },
+
+  TOKEN_NOT_VALID: {
+    en: 'Not valid Token',
+    ua: 'Token не валідний'
+  },
 };
