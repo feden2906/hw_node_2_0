@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const { apiRouter } = require('./routers');
 const { config: { PORT, MONGO_URL } } = require('./configs');

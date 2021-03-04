@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 const { User, O_Auth } = require('../models');
-const { statusCodes, statusMessages } = require('../constants');
+const { statusCodes, statusMessages, constants } = require('../constants');
+const { JWT_SECRET } = require('../configs/configs');
 
 module.exports = {
   isUserExistForAuth: async (req, res, next) => {
@@ -24,13 +25,13 @@ module.exports = {
   checkAccessToken: async (req, res, next) => {
     try {
       const { prefLang = 'en' } = req.query;
-      const access_token = req.get('Authorization');
+      const access_token = req.get(constants.AUTHORIZATION);
 
       if (!access_token) {
         throw new Error(statusMessages.TOKEN_IS_REQUIRED[prefLang]);
       }
 
-      jwt.verify(access_token, 'SECRET_1', (err) => {
+      jwt.verify(access_token, JWT_SECRET, (err) => {
         if (err) {
           throw new Error(statusMessages.TOKEN_NOT_VALID[prefLang]);
         }
