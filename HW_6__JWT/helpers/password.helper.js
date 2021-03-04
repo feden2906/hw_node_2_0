@@ -4,6 +4,7 @@ const { statusMessages } = require('../constants');
 
 module.exports = {
   hash: (password) => bcrypt.hash(password, 12),
+
   compare: async (password, hashPassword, prefLang) => {
     const isPasswordEquals = await bcrypt.compare(password, hashPassword);
 
