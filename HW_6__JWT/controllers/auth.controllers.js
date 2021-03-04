@@ -1,5 +1,5 @@
 const { passwordHasher, tokenizer } = require('../helpers');
-const { statusCodes, statusMessages } = require('../constants');
+const { statusCodes } = require('../constants');
 const { authService } = require('../services');
 
 module.exports = {

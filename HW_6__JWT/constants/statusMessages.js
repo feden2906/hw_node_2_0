@@ -118,4 +118,9 @@ module.exports = {
     en: 'Not valid Token',
     ua: 'Token не валідний'
   },
+
+  AUTHORIZATION: {
+    en: 'Authorization',
+    ua: 'Немає доступу'
+  }
 };

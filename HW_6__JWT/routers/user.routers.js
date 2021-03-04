@@ -9,8 +9,8 @@ router.route('/')
 
 router.route('/:userID')
     .get(mwUrl.checkQuery, userControllers.getUserById)
-    .put(mwUrl.checkQuery, mwAuth.checkAccessToken, mwUser.isUserVal, userControllers.updateUser)
-    .delete(mwUrl.checkQuery, mwAuth.checkAccessToken, userControllers.deleteUser);
+    .put(mwUrl.checkQuery, mwAuth.checkAccessToken, mwAuth.isAvailable, mwUser.isUserVal, userControllers.updateUser)
+    .delete(mwUrl.checkQuery, mwAuth.checkAccessToken, mwAuth.isAvailable, userControllers.deleteUser);
 
 router.param('userID', mwUser.findUserById);
 
