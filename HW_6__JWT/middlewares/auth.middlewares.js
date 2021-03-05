@@ -5,14 +5,11 @@ const { statusCodes, statusMessages, constants } = require('../constants');
 const { JWT_SECRET } = require('../configs/configs');
 
 module.exports = {
-  isAvailable: async (req, res, next) => {
+  isAvailable: (req, res, next) => {
     try {
-      const { profile, params: { userID }, query: { prefLang = 'en' } } = req;
+      const { tokens, params: { userID }, query: { prefLang = 'en' } } = req;
 
-      const user = await User.findOne({ email });
-      console.log(profile.id, userID);
-
-      if (profile.id !== userID) {
+      if (tokens.userID.id.toString() !== userID.toString()) {
         throw new Error(statusMessages.AUTHORIZATION[prefLang]);
       }
 
@@ -60,7 +57,7 @@ module.exports = {
         throw new Error(statusMessages.TOKEN_NOT_VALID[prefLang]);
       }
 
-      req.logedUser = tokens;
+      req.tokens = tokens;
       next();
     } catch (e) {
       res.status(statusCodes.BAD_REQUEST).json(e.message);
