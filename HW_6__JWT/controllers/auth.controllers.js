@@ -17,5 +17,19 @@ module.exports = {
     } catch (e) {
       res.status(statusCodes.BAD_REQUEST).json(e.message);
     }
+  },
+
+  updateTokens: (req, res) => {
+    try {
+      const { query: { prefLang = 'en' }, tokens: { access_token, refresh_token, userID } } = req;
+
+      console.log(refresh_token);
+
+      const tokens = tokenizer();
+
+      res.json({ access_token, refresh_token });
+    } catch (e) {
+      res.status(statusCodes.BAD_REQUEST).json(e.message);
+    }
   }
 };

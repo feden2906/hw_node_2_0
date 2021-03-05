@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const { User, O_Auth } = require('../models');
 const { statusCodes, statusMessages, constants } = require('../constants');
-const { JWT_SECRET } = require('../configs/configs');
+const { JWT_SECRET, JWT_REFRESH_SECRET } = require('../configs/configs');
 
 module.exports = {
   isAvailable: (req, res, next) => {
@@ -15,7 +15,7 @@ module.exports = {
 
       next();
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      res.status(statusCodes.UNAUTHORIZED).json(e.message);
     }
   },
 
@@ -47,11 +47,39 @@ module.exports = {
 
       jwt.verify(access_token, JWT_SECRET, (err) => {
         if (err) {
-          throw new Error(statusMessages.TOKEN_NOT_VALID[prefLang]);
+          res.status(statusCodes.UNAUTHORIZED).json(statusMessages.TOKEN_NOT_VALID[prefLang]);
         }
       });
 
       const tokens = await O_Auth.findOne({ access_token }).populate('userID');
+
+      if (!tokens) {
+        throw new Error(statusMessages.TOKEN_NOT_VALID[prefLang]);
+      }
+
+      req.tokens = tokens;
+      next();
+    } catch (e) {
+      res.status(statusCodes.BAD_REQUEST).json(e.message);
+    }
+  },
+
+  checkRefreshToken: async (req, res, next) => {
+    try {
+      const { prefLang = 'en' } = req.query;
+      const refresh_token = req.get(constants.AUTHORIZATION);
+
+      if (!refresh_token) {
+        throw new Error(statusMessages.TOKEN_IS_REQUIRED[prefLang]);
+      }
+
+      jwt.verify(refresh_token, JWT_REFRESH_SECRET, (err) => {
+        if (err) {
+          throw new Error(statusMessages.TOKEN_NOT_VALID[prefLang]);
+        }
+      });
+
+      const tokens = await O_Auth.findOne({ refresh_token });
 
       if (!tokens) {
         throw new Error(statusMessages.TOKEN_NOT_VALID[prefLang]);
