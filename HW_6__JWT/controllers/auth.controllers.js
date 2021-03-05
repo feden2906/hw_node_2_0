@@ -1,6 +1,7 @@
 const { passwordHasher, tokenizer } = require('../helpers');
 const { statusCodes } = require('../constants');
 const { authService } = require('../services');
+const { O_Auth } = require('../models');
 
 module.exports = {
   authUser: async (req, res) => {
@@ -19,15 +20,15 @@ module.exports = {
     }
   },
 
-  updateTokens: (req, res) => {
+  updateTokens: async (req, res) => {
     try {
-      const { query: { prefLang = 'en' }, tokens: { access_token, refresh_token, userID } } = req;
-
-      console.log(refresh_token);
+      const { query: { prefLang = 'en' }, tokens: { refresh_token, userID } } = req;
 
       const tokens = tokenizer();
 
-      res.json({ access_token, refresh_token });
+      await authService.updateTokens(tokens, userID);
+
+      res.json(tokens);
     } catch (e) {
       res.status(statusCodes.BAD_REQUEST).json(e.message);
     }
