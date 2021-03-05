@@ -81,10 +81,6 @@ module.exports = {
 
       const tokens = await O_Auth.findOne({ refresh_token });
 
-      if (refresh_token !== tokens.refresh_token) {
-        throw new Error(statusMessages.TOKEN_NOT_VALID[prefLang]);
-      }
-
       req.tokens = tokens;
       next();
     } catch (e) {
