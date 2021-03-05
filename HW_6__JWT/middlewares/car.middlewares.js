@@ -1,7 +1,5 @@
 const { statusCodes, statusMessages } = require('../constants');
 
-const { carValidators } = require('../validators');
-
 module.exports = {
   isModelVal: (req, res, next) => {
     try {

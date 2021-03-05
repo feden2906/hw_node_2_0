@@ -1,7 +1,6 @@
 const { passwordHasher, tokenizer } = require('../helpers');
 const { statusCodes } = require('../constants');
 const { authService } = require('../services');
-const { O_Auth } = require('../models');
 
 module.exports = {
   authUser: async (req, res) => {
@@ -22,7 +21,7 @@ module.exports = {
 
   updateTokens: async (req, res) => {
     try {
-      const { query: { prefLang = 'en' }, tokens: { refresh_token, userID } } = req;
+      const { query: { prefLang = 'en' }, tokens: { userID } } = req;
 
       const tokens = tokenizer();
 
