@@ -10,7 +10,7 @@ module.exports = {
         throw new Error(statusMessages.MODEL_IS_EMPTY[prefLang]);
       }
 
-      if (!Number.isNaN(+name)) {
+      if (!Number.isNaN(+model)) {
         throw new Error(statusMessages.NOT_VALID_MODEL[prefLang]);
       }
 
