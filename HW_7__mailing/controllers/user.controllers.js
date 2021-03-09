@@ -45,11 +45,13 @@ module.exports = {
 
   updateUser: async (req, res) => {
     try {
-      const { body, body: { password }, params: { userID }, query: { prefLang = 'en' } } = req;
+      const { body, body: { name, email, password }, params: { userID }, query: { prefLang = 'en' } } = req;
 
       const hashPassword = await passwordHasher.hash(password);
 
       await userService.updateUser(userID, { ...body, password: hashPassword });
+
+      await mailService.sendMail(email, emailActionsEnum.CHANGE_INFO, { name });
 
       res.json(statusMessages.USER_WAS_UPDATE[prefLang]);
     } catch (e) {
