@@ -1,11 +1,11 @@
 const router = require('express').Router();
 
 const { userControllers } = require('../controllers');
-const { mwUser, mwUrl, mwAuth } = require('../middlewares');
+const { mwAuth, mwFile, mwUser, mwUrl } = require('../middlewares');
 
 router.route('/')
     .get(mwUrl.checkQuery, userControllers.getAllUsers)
-    .post(mwUrl.checkQuery, mwUser.isUserExist, mwUser.isUserVal, userControllers.createUser);
+    .post(mwFile.checkFile, mwFile.checkAvatar, mwUrl.checkQuery, mwUser.isUserExist, mwUser.isUserVal, userControllers.createUser);
 
 router.route('/:userID')
     .get(mwUrl.checkQuery, userControllers.getUserById)
