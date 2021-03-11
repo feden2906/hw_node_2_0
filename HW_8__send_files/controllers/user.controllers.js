@@ -2,7 +2,6 @@ const { passwordHasher } = require('../helpers');
 const { statusCodes, statusMessages, emailActionsEnum } = require('../constants');
 const { userService, mailService } = require('../services');
 
-
 module.exports = {
   getAllUsers: async (req, res, next) => {
     try {
