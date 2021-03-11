@@ -1,5 +1,6 @@
 const { ErrorHandler } = require('../helpers');
 const { statusMessages, statusCodes } = require('../constants');
+const { AVATAR } = require('../constants/constants');
 const {
   DOC_MIMETYPES,
   DOC_MAX_SIZE,
@@ -35,9 +36,8 @@ module.exports = {
             throw new ErrorHandler(statusMessages.FILE_TOO_BIG[prefLang], statusCodes.BAD_REQUEST);
           }
 
-          if (key === 'avatar') {
+          if (key === AVATAR) {
             req.avatar = files[key];
-            continue;
           }
 
           photos.push(files[key]);
