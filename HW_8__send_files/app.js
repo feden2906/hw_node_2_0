@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const fileUpload = require('express-fileupload');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -13,6 +14,8 @@ _connectDB();
 app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(process.cwd(), 'public')));
+
 app.use('/', apiRouter);
 
 app.use('*', (err, req, res, next) => {
