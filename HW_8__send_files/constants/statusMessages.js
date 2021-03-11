@@ -59,6 +59,16 @@ module.exports = {
     ua: 'ID не валідний'
   },
 
+  NOT_VALID_FILE: {
+    en: 'Not allowed file type',
+    ua: 'Заборонений тип файлу'
+  },
+
+  FILE_TOO_BIG: {
+    en: 'File to big',
+    ua: 'Файл занадто важкий'
+  },
+
   NOT_VALID_USERNAME: {
     en: 'Name cannot be a number',
     ua: 'Ім\'я користувача не може бути числом'
@@ -127,5 +137,10 @@ module.exports = {
   AUTHORIZATION: {
     en: 'Authorization',
     ua: 'Немає доступу'
+  },
+
+  JUST_ONE_PHOTO: {
+    en: 'You can upload just one photo',
+    ua: 'Ви можете заваттажити лише одне фото'
   }
 };
