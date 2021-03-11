@@ -140,7 +140,7 @@ module.exports = {
   },
 
   JUST_ONE_PHOTO: {
-    en: 'You can upload just one photo',
-    ua: 'Ви можете заваттажити лише одне фото'
+    en: 'You can upload just one photo via field - "avatar"',
+    ua: 'Ви можете заваттажити лише одне фото з назвою поля - "avatar"'
   }
 };

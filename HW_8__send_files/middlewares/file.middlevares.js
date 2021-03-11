@@ -35,6 +35,11 @@ module.exports = {
             throw new ErrorHandler(statusMessages.FILE_TOO_BIG[prefLang], statusCodes.BAD_REQUEST);
           }
 
+          if (key === 'avatar') {
+            req.avatar = files[key];
+            continue;
+          }
+
           photos.push(files[key]);
           continue;
         }
@@ -62,13 +67,12 @@ module.exports = {
 
   checkAvatar: (req, res, next) => {
     try {
-      const { prefLang = 'en' } = req.query;
+      const { avatar, query: { prefLang = 'en' } } = req;
 
-      if (req.photos.length > 1) {
+      if (!avatar) {
         throw new ErrorHandler(statusMessages.JUST_ONE_PHOTO[prefLang], statusCodes.BAD_REQUEST);
       }
 
-      [req.avatar] = req.photos;
       next();
     } catch (e) {
       next(e);
