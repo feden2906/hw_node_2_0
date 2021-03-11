@@ -1,6 +1,7 @@
 const { User } = require('../models');
 const { statusMessages, statusCodes } = require('../constants');
 const { userValidators, urlValidators } = require('../validators');
+const { ErrorHandler } = require('../helpers');
 
 module.exports = {
   findUserById: async (req, res, next) => {
@@ -10,19 +11,19 @@ module.exports = {
       const { error } = urlValidators.idValidator.validate({ userID });
 
       if (error) {
-        throw new Error(statusMessages.NOT_VALID_ID[prefLang]);
+        throw new ErrorHandler(statusMessages.NOT_VALID_ID[prefLang], statusCodes.BAD_REQUEST);
       }
 
       const user = await User.findOne({ _id: userID });
 
       if (!user) {
-        throw new Error(statusMessages.USER_NOT_FOUND[prefLang]);
+        throw new ErrorHandler(statusMessages.USER_NOT_FOUND[prefLang], statusCodes.BAD_REQUEST);
       }
 
       req.profile = user;
       next();
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   },
 
@@ -31,12 +32,12 @@ module.exports = {
       const { error } = userValidators.createUserValidator.validate(req.body);
 
       if (error) {
-        throw new Error(error.details[0].message);
+        throw new ErrorHandler(error.details[0].message, statusCodes.BAD_REQUEST);
       }
 
       next();
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   },
 
@@ -47,12 +48,12 @@ module.exports = {
       const user = await User.findOne({ email });
 
       if (user) {
-        throw new Error(statusMessages.USER_IS_EXISTS[prefLang]);
+        throw new ErrorHandler(statusMessages.USER_IS_EXISTS[prefLang], statusCodes.BAD_REQUEST);
       }
 
       next();
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   }
 };

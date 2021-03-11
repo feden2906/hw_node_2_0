@@ -99,6 +99,11 @@ module.exports = {
     ua: 'Невірний логін або пароль'
   },
 
+  WRONG_EMAIL_ACTION: {
+    en: 'Wrong email action',
+    ua: 'Неіснуючий email action'
+  },
+
   USER_WAS_UPDATE: {
     en: 'User was updated',
     ua: 'Дані користувача оновлено'

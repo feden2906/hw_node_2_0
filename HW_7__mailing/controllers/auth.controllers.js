@@ -3,7 +3,7 @@ const { statusCodes } = require('../constants');
 const { authService } = require('../services');
 
 module.exports = {
-  authUser: async (req, res) => {
+  authUser: async (req, res, next) => {
     try {
       const { body: { password }, query: { prefLang = 'en' }, profile } = req;
 
@@ -15,7 +15,7 @@ module.exports = {
 
       res.json(tokens);
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   },
 

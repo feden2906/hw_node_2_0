@@ -3,7 +3,9 @@ const EmailTemplates = require('email-templates');
 const path = require('path');
 
 const { ROOT_EMAIL, ROOT_EMAIL_PASSWORD } = require('../configs/configs');
+const { statusCodes, statusMessages } = require('../constants');
 const templateInfo = require('../email-templates');
+const { ErrorHandler } = require('../helpers');
 
 const templateParser = new EmailTemplates({
   views: {
@@ -23,7 +25,7 @@ const sendMail = async (userMail, action, context) => {
   const chosenTemplate = templateInfo[action];
 
   if (!chosenTemplate) {
-    throw new Error('Wrong email action');
+    throw new ErrorHandler(statusMessages.WRONG_EMAIL_ACTION, statusCodes.BAD_REQUEST);
   }
 
   const html = await templateParser.render(chosenTemplate.templateName, context);

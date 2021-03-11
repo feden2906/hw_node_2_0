@@ -2,8 +2,9 @@ const { passwordHasher } = require('../helpers');
 const { statusCodes, statusMessages, emailActionsEnum } = require('../constants');
 const { userService, mailService } = require('../services');
 
+
 module.exports = {
-  getAllUsers: async (req, res) => {
+  getAllUsers: async (req, res, next) => {
     try {
       const { prefLang = 'en', ...rest } = req.query;
 
@@ -11,11 +12,11 @@ module.exports = {
 
       res.json(users);
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   },
 
-  getUserById: async (req, res) => {
+  getUserById: async (req, res, next) => {
     try {
       const { params: { userID }, query: { prefLang = 'en' } } = req;
 
@@ -23,11 +24,11 @@ module.exports = {
 
       res.json(user);
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   },
 
-  createUser: async (req, res) => {
+  createUser: async (req, res, next) => {
     try {
       const { body, body: { name, email, password }, query: { prefLang = 'en' } } = req;
 
@@ -39,11 +40,11 @@ module.exports = {
 
       res.status(statusCodes.CREATED).json(statusMessages.USER_IS_CREATED[prefLang]);
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   },
 
-  updateUser: async (req, res) => {
+  updateUser: async (req, res, next) => {
     try {
       const { body, body: { name, email, password }, params: { userID }, query: { prefLang = 'en' } } = req;
 
@@ -55,11 +56,11 @@ module.exports = {
 
       res.json(statusMessages.USER_WAS_UPDATE[prefLang]);
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   },
 
-  deleteUser: async (req, res) => {
+  deleteUser: async (req, res, next) => {
     try {
       const { params: { userID }, query: { prefLang = 'en' } } = req;
 
@@ -71,7 +72,7 @@ module.exports = {
 
       res.json(statusMessages.USER_WAS_DELETED[prefLang]);
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   }
 };

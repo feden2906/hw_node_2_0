@@ -1,5 +1,6 @@
 const { statusCodes } = require('../constants');
 const { urlValidators } = require('../validators');
+const { ErrorHandler } = require('../helpers');
 
 module.exports = {
   checkQuery: (req, res, next) => {
@@ -7,12 +8,12 @@ module.exports = {
       const { error } = urlValidators.queryValidator.validate(req.query);
 
       if (error) {
-        throw new Error(error.details[0].message);
+        throw new ErrorHandler(error.details[0].message, statusCodes.BAD_REQUEST);
       }
 
       next();
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   }
 };

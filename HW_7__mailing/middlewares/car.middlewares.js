@@ -1,4 +1,5 @@
 const { statusCodes, statusMessages } = require('../constants');
+const { ErrorHandler } = require('../helpers');
 
 module.exports = {
   isModelVal: (req, res, next) => {
@@ -6,16 +7,16 @@ module.exports = {
       const { body: { model }, query: { prefLang = 'en' } } = req;
 
       if (!model) {
-        throw new Error(statusMessages.MODEL_IS_EMPTY[prefLang]);
+        throw new ErrorHandler(statusMessages.MODEL_IS_EMPTY[prefLang], statusCodes.BAD_REQUEST);
       }
 
       if (!Number.isNaN(+model)) {
-        throw new Error(statusMessages.NOT_VALID_MODEL[prefLang]);
+        throw new ErrorHandler(statusMessages.NOT_VALID_MODEL[prefLang], statusCodes.BAD_REQUEST);
       }
 
       next();
     } catch (e) {
-      res.status(statusCodes.BAD_REQUEST).json(e.message);
+      next(e);
     }
   }
 };
