@@ -8,7 +8,7 @@ module.exports = {
 
   createUser: (userObject) => User.create(userObject),
 
-  updateUser: (userID, userObject) => User.findByIdAndUpdate(userID, userObject),
+  updateUser: (userID, userObject) => User.findByIdAndUpdate(userID, { $set: userObject }),
 
   deleteUser: (userID) => User.findByIdAndDelete(userID)
 };
