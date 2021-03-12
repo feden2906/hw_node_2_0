@@ -1,8 +1,6 @@
-const path = require('path');
 const fs = require('fs-extra').promises;
-const uuid = require('uuid').v1;
 
-const { passwordHasher } = require('../helpers');
+const { passwordHasher, utils } = require('../helpers');
 const { statusCodes, statusMessages, emailActionsEnum } = require('../constants');
 const { userService, mailService } = require('../services');
 
@@ -33,23 +31,29 @@ module.exports = {
 
   createUser: async (req, res, next) => {
     try {
-      const { avatar, body, body: { name, email, password }, query: { prefLang = 'en' } } = req;
+      const { avatar, docs, videos, body, body: { name, email, password }, query: { prefLang = 'en' } } = req;
 
       const hashPassword = await passwordHasher.hash(password);
 
       const user = await userService.createUser({ ...body, password: hashPassword });
+      const itemID = user._id.toString();
 
       if (avatar) {
-        const pathWithoutPublic = path.join('user', user._id.toString(), 'photos');
-        const photosDir = path.join(process.cwd(), 'public', pathWithoutPublic);
-        const fileExtension = path.extname(avatar.name);
-        const photoName = uuid() + fileExtension;
-        const finalPhotoPath = path.join(photosDir, photoName);
-        const pathPhotoForDB = path.join(pathWithoutPublic, photoName);
+        const { finalPath, pathForDB, fullDirPath } = utils._filesDirBuilder(avatar.name, itemID, 'users', 'photos');
 
-        await fs.mkdir(photosDir, { recursive: true });
-        await avatar.mv(finalPhotoPath);
-        await userService.updateUser(user._id, { avatar: pathPhotoForDB });
+        await fs.mkdir(fullDirPath, { recursive: true });
+        await avatar.mv(finalPath);
+        await userService.updateUser(itemID, { avatar: pathForDB });
+      }
+
+      if (docs.length) {
+        const pathArr = await utils._filesListSaver(docs, itemID, 'users', 'docs');
+        await userService.updateUser(itemID, { docs: pathArr });
+      }
+
+      if (videos.length) {
+        const pathArr = await utils._filesListSaver(videos, itemID, 'users', 'videos');
+        await userService.updateUser(itemID, { docs: pathArr });
       }
 
       await mailService.sendMail(email, emailActionsEnum.WELCOME, { name });
@@ -92,5 +96,3 @@ module.exports = {
     }
   }
 };
-
-

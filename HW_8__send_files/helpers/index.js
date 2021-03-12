@@ -1,5 +1,6 @@
 module.exports = {
   ErrorHandler: require('./errorHandler'),
   passwordHasher: require('./password.helper'),
-  tokenizer: require('./tokenizer')
+  tokenizer: require('./tokenizer'),
+  utils: require('./utils')
 };
