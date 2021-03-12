@@ -7,7 +7,7 @@ const userSchema = new Schema({
   docs: [],
   videos: [],
   name: { type: String, required: true },
-  password: { type: String, required: true },
+  password: { type: String, required: true, select: false },
   email: { type: String, required: true },
   phone: { type: String },
   yearBorn: { type: Number },
