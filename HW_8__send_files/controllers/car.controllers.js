@@ -34,6 +34,21 @@ module.exports = {
       const car = await carService.createCar(body, prefLang);
       const itemID = car._id.toString();
 
+      if (photos.length) {
+        const pathArr = await utils._filesListSaver(photos, itemID, 'cars', 'photos');
+        await carService.updateCar(itemID, { photos: pathArr });
+      }
+
+      if (docs.length) {
+        const pathArr = await utils._filesListSaver(docs, itemID, 'cars', 'docs');
+        await carService.updateCar(itemID, { docs: pathArr });
+      }
+
+      if (videos.length) {
+        const pathArr = await utils._filesListSaver(videos, itemID, 'cars', 'videos');
+        await carService.updateCar(itemID, { videos: pathArr });
+      }
+
       res.status(statusCodes.CREATED).json(statusMessages.CAR_IS_CREATED[prefLang]);
     } catch (e) {
       next(e);

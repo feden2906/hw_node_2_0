@@ -7,7 +7,10 @@ const carSchema = new Schema({
   model: { type: String },
   owner: { type: Number },
   price: { type: Number },
-  producer: { type: String }
+  producer: { type: String },
+  docs: [],
+  videos: [],
+  photos: []
 });
 
 module.exports = model(CAR, carSchema);

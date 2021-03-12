@@ -7,5 +7,7 @@ module.exports = {
 
   createCar: (carObject) => Car.create(carObject),
 
+  updateCar: (carID, carObject) => Car.findByIdAndUpdate(carID, { $set: carObject }),
+
   deleteCar: (carID) => Car.findByIdAndDelete(carID)
 };
