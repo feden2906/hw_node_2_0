@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const { User, O_Auth } = require('../models');
+const { authService, userService } = require('../services');
 const { statusCodes, statusMessages, constants } = require('../constants');
 const { JWT_SECRET, JWT_REFRESH_SECRET } = require('../configs/configs');
 const { ErrorHandler } = require('../helpers');
@@ -24,7 +24,7 @@ module.exports = {
     try {
       const { body: { email }, query: { prefLang = 'en' } } = req;
 
-      const user = await User.findOne({ email });
+      const user = await userService.findUser({ email });
 
       if (!user) {
         throw new ErrorHandler(statusMessages.WRONG_EMAIL_OR_PASSWORD[prefLang], statusCodes.BAD_REQUEST);
@@ -52,7 +52,7 @@ module.exports = {
         }
       });
 
-      const tokens = await O_Auth.findOne({ access_token }).populate('userID');
+      const tokens = await authService.getTokensByAccess(access_token);
 
       if (!tokens) {
         throw new ErrorHandler(statusMessages.TOKEN_NOT_VALID[prefLang], statusCodes.BAD_REQUEST);
@@ -80,7 +80,7 @@ module.exports = {
         }
       });
 
-      req.tokens = await O_Auth.findOne({ refresh_token });
+      req.tokens = await authService.getTokensByRefresh(refresh_token);
       next();
     } catch (e) {
       next(e);

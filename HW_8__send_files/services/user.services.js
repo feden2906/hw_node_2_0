@@ -6,6 +6,8 @@ module.exports = {
 
   findUserById: (userID) => User.findById(userID),
 
+  findUser: (findObj) => User.findOne(findObj),
+
   createUser: (userObject) => User.create(userObject),
 
   updateUser: (userID, userObject) => User.findByIdAndUpdate(userID, { $set: userObject }),
