@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { userService } = require('../services');
 const { statusMessages, statusCodes } = require('../constants');
 const { userValidators, urlValidators } = require('../validators');
 const { ErrorHandler } = require('../helpers');
@@ -14,7 +14,7 @@ module.exports = {
         throw new ErrorHandler(statusMessages.NOT_VALID_ID[prefLang], statusCodes.BAD_REQUEST);
       }
 
-      const user = await User.findOne({ _id: userID });
+      const user = await userService.findUserById(userID);
 
       if (!user) {
         throw new ErrorHandler(statusMessages.USER_NOT_FOUND[prefLang], statusCodes.BAD_REQUEST);
