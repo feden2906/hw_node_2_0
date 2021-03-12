@@ -2,8 +2,6 @@ const path = require('path');
 const fs = require('fs-extra').promises;
 const uuid = require('uuid').v1;
 
-// const { userService } = require('../services');
-
 const _filesDirBuilder = (docName, itemID, itemClass, itemType) => {
   const pathWithoutPublic = path.join(itemClass, itemID, itemType);
   const fullDirPath = path.join(process.cwd(), 'public', pathWithoutPublic);

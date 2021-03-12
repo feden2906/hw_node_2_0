@@ -1,5 +1,6 @@
 const { carService } = require('../services');
 const { statusCodes, statusMessages } = require('../constants');
+const { utils } = require('../helpers');
 
 module.exports = {
   getAllCars: async (req, res, next) => {
@@ -28,9 +29,10 @@ module.exports = {
 
   createCar: async (req, res, next) => {
     try {
-      const { body, query: { prefLang = 'en' } } = req;
+      const { docs, photos, videos, body, query: { prefLang = 'en' } } = req;
 
-      await carService.createCar(body, prefLang);
+      const car = await carService.createCar(body, prefLang);
+      const itemID = car._id.toString();
 
       res.status(statusCodes.CREATED).json(statusMessages.CAR_IS_CREATED[prefLang]);
     } catch (e) {
