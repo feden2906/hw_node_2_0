@@ -1,7 +1,7 @@
 const fs = require('fs-extra').promises;
 
 const { passwordHasher, utils } = require('../helpers');
-const { statusCodes, statusMessages, emailActionsEnum } = require('../constants');
+const { directoryName: { USERS, DOCS, PHOTOS, VIDEOS }, statusCodes, statusMessages, emailActionsEnum } = require('../constants');
 const { userService, mailService } = require('../services');
 
 module.exports = {
@@ -39,7 +39,7 @@ module.exports = {
       const itemID = user._id.toString();
 
       if (avatar) {
-        const { finalPath, pathForDB, fullDirPath } = utils._filesDirBuilder(avatar.name, itemID, 'users', 'photos');
+        const { finalPath, pathForDB, fullDirPath } = utils._filesDirBuilder(avatar.name, itemID, USERS, PHOTOS);
 
         await fs.mkdir(fullDirPath, { recursive: true });
         await avatar.mv(finalPath);
@@ -47,12 +47,12 @@ module.exports = {
       }
 
       if (docs.length) {
-        const pathArr = await utils._filesListSaver(docs, itemID, 'users', 'docs');
+        const pathArr = await utils._filesListSaver(docs, itemID, USERS, DOCS);
         await userService.updateUser(itemID, { docs: pathArr });
       }
 
       if (videos.length) {
-        const pathArr = await utils._filesListSaver(videos, itemID, 'users', 'videos');
+        const pathArr = await utils._filesListSaver(videos, itemID, USERS, VIDEOS);
         await userService.updateUser(itemID, { docs: pathArr });
       }
 

@@ -1,5 +1,5 @@
 const { carService } = require('../services');
-const { statusCodes, statusMessages } = require('../constants');
+const { directoryName: { CARS, DOCS, PHOTOS, VIDEOS }, statusCodes, statusMessages } = require('../constants');
 const { utils } = require('../helpers');
 
 module.exports = {
@@ -35,17 +35,17 @@ module.exports = {
       const itemID = car._id.toString();
 
       if (photos.length) {
-        const pathArr = await utils._filesListSaver(photos, itemID, 'cars', 'photos');
+        const pathArr = await utils._filesListSaver(photos, itemID, CARS, PHOTOS);
         await carService.updateCar(itemID, { photos: pathArr });
       }
 
       if (docs.length) {
-        const pathArr = await utils._filesListSaver(docs, itemID, 'cars', 'docs');
+        const pathArr = await utils._filesListSaver(docs, itemID, CARS, DOCS);
         await carService.updateCar(itemID, { docs: pathArr });
       }
 
       if (videos.length) {
-        const pathArr = await utils._filesListSaver(videos, itemID, 'cars', 'videos');
+        const pathArr = await utils._filesListSaver(videos, itemID, CARS, VIDEOS);
         await carService.updateCar(itemID, { videos: pathArr });
       }
 
