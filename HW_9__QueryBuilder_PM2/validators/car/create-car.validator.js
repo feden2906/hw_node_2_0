@@ -6,7 +6,7 @@ module.exports = Joi.object({
   year: Joi
       .number()
       .integer()
-      .min(CURRENT_YEAR - 20)
+      .min(1950)
       .max(CURRENT_YEAR),
   model: Joi
       .string(),
@@ -18,7 +18,5 @@ module.exports = Joi.object({
       .number()
       .min(0),
   producer: Joi
-      .string()
-      .min(3)
-      .max(30)
+      .valid('bmw', 'mercedes', 'audi', 'tesla'),
 });

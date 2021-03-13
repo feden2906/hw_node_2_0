@@ -1,4 +1,5 @@
 module.exports = {
   idValidator: require('./id.validator'),
-  queryValidator: require('./query.validator')
+  queryCarValidator: require('./queryCar.validator'),
+  queryUserValidator: require('./queryUser.validator')
 };

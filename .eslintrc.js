@@ -42,7 +42,7 @@ module.exports = {
       {
         MemberExpression: 2,
         SwitchCase: 1,
-        VariableDeclarator: 2
+        VariableDeclarator: 2,
       },
     ],
     'max-classes-per-file': 'off',
