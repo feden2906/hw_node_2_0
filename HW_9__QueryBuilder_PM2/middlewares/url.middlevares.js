@@ -3,9 +3,23 @@ const { urlValidators } = require('../validators');
 const { ErrorHandler } = require('../helpers');
 
 module.exports = {
-  checkQuery: (req, res, next) => {
+  checkUserQuery: (req, res, next) => {
     try {
-      const { error } = urlValidators.queryValidator.validate(req.query);
+      const { error } = urlValidators.queryUserValidator.validate(req.query);
+
+      if (error) {
+        throw new ErrorHandler(error.details[0].message, statusCodes.BAD_REQUEST);
+      }
+
+      next();
+    } catch (e) {
+      next(e);
+    }
+  },
+
+  checkCarQuery: (req, res, next) => {
+    try {
+      const { error } = urlValidators.queryCarValidator.validate(req.query);
 
       if (error) {
         throw new ErrorHandler(error.details[0].message, statusCodes.BAD_REQUEST);

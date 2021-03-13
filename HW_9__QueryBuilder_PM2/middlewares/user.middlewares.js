@@ -45,7 +45,7 @@ module.exports = {
     try {
       const { body: { email }, query: { prefLang = 'en' } } = req;
 
-      const user = await User.findOne({ email });
+      const user = await userService.findUser({ email });
 
       if (user) {
         throw new ErrorHandler(statusMessages.USER_IS_EXISTS[prefLang], statusCodes.BAD_REQUEST);

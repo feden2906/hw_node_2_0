@@ -15,8 +15,20 @@ module.exports = Joi.object({
       .integer()
       .min(constants.CURRENT_YEAR - 100)
       .max(constants.CURRENT_YEAR - 18),
+  yearBornGte: Joi
+      .number()
+      .integer()
+      .min(constants.CURRENT_YEAR - 100)
+      .max(constants.CURRENT_YEAR - 18),
+  yearBornLte: Joi
+      .number()
+      .integer()
+      .min(constants.CURRENT_YEAR - 100)
+      .max(constants.CURRENT_YEAR - 18),
   isMarried: Joi
       .boolean(),
   gender: Joi
-      .string(),
+      .valid('male', 'female'),
+  order: Joi
+      .valid('asc', 'desc')
 });
