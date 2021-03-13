@@ -1,14 +1,22 @@
 const router = require('express').Router();
 
 const { carControllers } = require('../controllers');
-const { mwCar, mwFile } = require('../middlewares');
+const { mwCar, mwFile, mwUrl } = require('../middlewares');
 
 router.route('/')
-    .get(carControllers.getAllCars)
-    .post(mwCar.isModelVal, mwFile.checkFile, carControllers.createCar);
+    .get(mwUrl.checkCarQuery,
+      carControllers.getAllCars)
+
+    .post(mwUrl.checkCarQuery,
+      mwCar.isModelVal,
+      mwFile.checkFile,
+      carControllers.createCar);
 
 router.route('/:carID')
-    .get(carControllers.getCarById)
-    .delete(carControllers.deleteCar);
+    .get(mwUrl.checkCarQuery,
+      carControllers.getCarById)
+
+    .delete(mwUrl.checkCarQuery,
+      carControllers.deleteCar);
 
 module.exports = router;
