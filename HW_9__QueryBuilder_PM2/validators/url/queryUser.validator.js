@@ -8,7 +8,7 @@ module.exports = Joi.object({
   name: Joi
       .string()
       .alphanum()
-      .min(2)
+      .min(1)
       .max(50),
   yearBorn: Joi
       .number()

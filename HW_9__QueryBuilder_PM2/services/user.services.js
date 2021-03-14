@@ -19,10 +19,6 @@ module.exports = {
         case 'yearBornLte':
           filterObject.yearBorn = Object.assign({}, filterObject.yearBorn, { $lte: filters.yearBornLte });
           break;
-        case 'category':
-          const catArr = filters.category.split(';');
-          filterObject.category = { $in: catArr };
-          break;
         case 'name':
           filterObject.name = { $regex: filters.name, $options: 'i' };
           break;
