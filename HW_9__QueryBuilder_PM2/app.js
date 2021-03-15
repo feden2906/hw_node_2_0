@@ -9,7 +9,6 @@ const { config: { PORT, MONGO_URL } } = require('./configs');
 
 const app = express();
 
-console.log(process.env);
 _connectDB();
 
 app.use(fileUpload());
