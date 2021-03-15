@@ -12,15 +12,18 @@ module.exports = {
     keys.forEach((key) => {
       switch (key) {
         case 'yearBornGte':
-          filterObject.yearBorn = { ...filterObject.yearBorn, $gte: filters.yearBornGte };
+          filterObject.yearBorn = Object.assign({}, filterObject.yearBorn, { $gte: filters.yearBornGte });
           break;
+
         case 'yearBornLte':
-          filterObject.yearBorn = { ...filterObject.yearBorn, $lte: filters.yearBornLte };
+          filterObject.yearBorn = Object.assign({}, filterObject.yearBorn, { $lte: filters.yearBornLte });
           break;
+
         case 'category':
           const catArr = filters.category.split(';');
           filterObject.category = { $in: catArr };
           break;
+
         case 'name':
           filterObject.name = { $regex: filters.name, $options: 'i' };
           break;
@@ -33,7 +36,11 @@ module.exports = {
     const count = await User.countDocuments(filterObject);
 
     return {
-      data, page, limit, count, pages: Math.ceil(count / limit)
+      data,
+      page,
+      limit,
+      count,
+      pages: Math.ceil(count / limit)
     };
   },
 

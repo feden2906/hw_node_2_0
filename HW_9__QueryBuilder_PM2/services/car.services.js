@@ -11,24 +11,30 @@ module.exports = {
     keys.forEach((key) => {
       switch (key) {
         case 'yearGte':
-          filterObject.year = { ...filterObject.year, $gte: filters[key] };
+          filterObject.year = Object.assign({}, filterObject.year, { $gte: filters[key] });
           break;
+
         case 'yearLte':
-          filterObject.year = { ...filterObject.year, $lte: filters[key] };
+          filterObject.year = Object.assign({}, filterObject.year, { $lte: filters[key] });
           break;
+
         case 'priceGte':
-          filterObject.price = { ...filterObject.price, $gte: filters[key] };
+          filterObject.price = Object.assign({}, filterObject.price, { $gte: filters[key] });
           break;
+
         case 'priceLte':
-          filterObject.price = { ...filterObject.price, $lte: filters[key] };
+          filterObject.price = Object.assign({}, filterObject.price, { $lte: filters[key] });
           break;
+
         case 'producer':
           const producersArr = filters[key].split(';');
           filterObject.producer = { $in: producersArr };
           break;
+
         case 'model':
           filterObject.model = { $regex: filters[key], $options: 'i' };
           break;
+
         default:
           filterObject[key] = filters[key];
       }
@@ -38,7 +44,11 @@ module.exports = {
     const count = await Car.countDocuments(filterObject);
 
     return {
-      data, page, limit, count, pages: Math.ceil(count / limit)
+      data,
+      page,
+      limit,
+      count,
+      pages: Math.ceil(count / limit)
     };
   },
 

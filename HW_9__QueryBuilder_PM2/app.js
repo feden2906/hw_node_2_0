@@ -2,13 +2,14 @@ const express = require('express');
 const path = require('path');
 const fileUpload = require('express-fileupload');
 const mongoose = require('mongoose');
-require('dotenv').config();
+require('dotenv').config({ path: './.env' });
 
 const { apiRouter } = require('./routers');
 const { config: { PORT, MONGO_URL } } = require('./configs');
 
 const app = express();
 
+console.log(process.env);
 _connectDB();
 
 app.use(fileUpload());

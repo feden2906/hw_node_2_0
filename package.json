@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start9": "pm2 kill && pm2 start HW_9__QueryBuilder_PM2/app.js --name HW9 --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
