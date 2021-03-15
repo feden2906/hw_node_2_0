@@ -4,8 +4,8 @@ const { dataBaseTable: { USER, CAR } } = require('../constants');
 
 const userSchema = new Schema({
   avatar: { type: String },
-  docs: [],
-  videos: [],
+  docs: [{ type: String }],
+  videos: [{ type: String }],
   name: { type: String, required: true },
   password: { type: String, required: true, select: false },
   email: { type: String, required: true },

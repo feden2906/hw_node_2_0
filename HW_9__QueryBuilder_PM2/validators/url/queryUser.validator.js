@@ -29,6 +29,8 @@ module.exports = Joi.object({
       .boolean(),
   gender: Joi
       .valid('male', 'female'),
+  sortBy: Joi
+      .valid('yearBorn', 'name', 'updatedAt', 'createdAt'),
   order: Joi
       .valid('asc', 'desc')
 });

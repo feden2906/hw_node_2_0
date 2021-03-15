@@ -2,7 +2,7 @@ const User = require('../models/User');
 require('../models/Car');
 
 module.exports = {
-  findAllUsers: (query = {}) => {
+  findAllUsers: async (query = {}) => {
     const { limit = 10, page = 1, sortBy = 'createAt', order = 'asc', ...filters } = query;
 
     const skip = (page - 1) * limit;
@@ -19,6 +19,10 @@ module.exports = {
         case 'yearBornLte':
           filterObject.yearBorn = Object.assign({}, filterObject.yearBorn, { $lte: filters.yearBornLte });
           break;
+        case 'category':
+          const catArr = filters.category.split(';');
+          filterObject.category = { $in: catArr };
+          break;
         case 'name':
           filterObject.name = { $regex: filters.name, $options: 'i' };
           break;
@@ -27,7 +31,16 @@ module.exports = {
       }
     });
 
-    return User.find(filterObject).limit(limit).skip(skip).sort(sort);
+    const data = await User.find(filterObject).limit(limit).skip(skip).sort(sort);
+    const count = await User.countDocuments(filterObject);
+
+    return {
+      data,
+      page,
+      limit,
+      count,
+      pages: Math.ceil(count / limit)
+    };
   },
 
   findUserById: (userID) => User.findById(userID),
