@@ -1,6 +1,6 @@
 module.exports = {
   USERS: 'users',
-  CARS: 'CARS',
+  CARS: 'cars',
 
   DOCS: 'docs',
   PHOTOS: 'photos',

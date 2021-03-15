@@ -25,8 +25,20 @@ module.exports = Joi.object({
       .integer()
       .min(1950)
       .max(constants.CURRENT_YEAR),
+  priceGte: Joi
+      .number()
+      .integer()
+      .min(0)
+      .max(500000),
+  priceLte: Joi
+      .number()
+      .integer()
+      .min(0)
+      .max(500000),
   producer: Joi
       .valid('bmw', 'mercedes', 'audi', 'tesla'),
+  sortBy: Joi
+      .valid('model', 'price', 'producer', 'year'),
   order: Joi
       .valid('asc', 'desc')
 });
