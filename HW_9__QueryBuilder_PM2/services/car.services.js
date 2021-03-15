@@ -13,28 +13,22 @@ module.exports = {
         case 'yearGte':
           filterObject.year = Object.assign({}, filterObject.year, { $gte: filters[key] });
           break;
-
         case 'yearLte':
           filterObject.year = Object.assign({}, filterObject.year, { $lte: filters[key] });
           break;
-
         case 'priceGte':
           filterObject.price = Object.assign({}, filterObject.price, { $gte: filters[key] });
           break;
-
         case 'priceLte':
           filterObject.price = Object.assign({}, filterObject.price, { $lte: filters[key] });
           break;
-
         case 'producer':
           const producersArr = filters[key].split(';');
           filterObject.producer = { $in: producersArr };
           break;
-
         case 'model':
           filterObject.model = { $regex: filters[key], $options: 'i' };
           break;
-
         default:
           filterObject[key] = filters[key];
       }
