@@ -1,14 +1,16 @@
 const router = require('express').Router();
 
 const { authControllers } = require('../controllers');
-const { mwAuth } = require('../middlewares');
+const { mwAuth, mwUrl } = require('../middlewares');
 
 router.route('/')
-    .post(mwAuth.isUserExistForAuth,
+    .post(mwUrl.disableQuery,
+      mwAuth.isUserExistForAuth,
       authControllers.authUser);
 
 router.route('/refreshToken')
-    .post(mwAuth.checkRefreshToken,
+    .post(mwUrl.disableQuery,
+      mwAuth.checkRefreshToken,
       authControllers.updateTokens);
 
 module.exports = router;

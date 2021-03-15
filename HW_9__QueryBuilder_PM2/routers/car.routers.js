@@ -7,16 +7,16 @@ router.route('/')
     .get(mwUrl.checkCarQuery,
       carControllers.getAllCars)
 
-    .post(mwUrl.checkCarQuery,
+    .post(mwUrl.disableQuery,
       mwCar.isModelVal,
       mwFile.checkFile,
       carControllers.createCar);
 
 router.route('/:carID')
-    .get(mwUrl.checkCarQuery,
+    .get(mwUrl.disableQuery,
       carControllers.getCarById)
 
-    .delete(mwUrl.checkCarQuery,
+    .delete(mwUrl.disableQuery,
       carControllers.deleteCar);
 
 module.exports = router;

@@ -7,24 +7,24 @@ router.route('/')
     .get(mwUrl.checkUserQuery,
       userControllers.getAllUsers)
 
-    .post(mwFile.checkFile,
+    .post(mwUrl.disableQuery,
+      mwFile.checkFile,
       mwFile.checkAvatar,
-      mwUrl.checkUserQuery,
       mwUser.isUserExist,
       mwUser.isUserVal,
       userControllers.createUser);
 
 router.route('/:userID')
-    .get(mwUrl.checkUserQuery,
+    .get(mwUrl.disableQuery,
       userControllers.getUserById)
 
-    .put(mwUrl.checkUserQuery,
+    .put(mwUrl.disableQuery,
       mwAuth.checkAccessToken,
       mwAuth.isAvailable,
       mwUser.isUserVal,
       userControllers.updateUser)
 
-    .delete(mwUrl.checkUserQuery,
+    .delete(mwUrl.disableQuery,
       mwAuth.checkAccessToken,
       mwAuth.isAvailable,
       userControllers.deleteUser);
