@@ -5,9 +5,9 @@ const { utils } = require('../helpers');
 module.exports = {
   getAllCars: async (req, res, next) => {
     try {
-      const { prefLang = 'en' } = req.query;
+      const { prefLang = 'en', ...query } = req.query;
 
-      const cars = await carService.findAllCars(prefLang);
+      const cars = await carService.findAllCars(query);
 
       res.json(cars);
     } catch (e) {
