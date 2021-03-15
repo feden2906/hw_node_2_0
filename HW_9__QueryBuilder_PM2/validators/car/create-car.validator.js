@@ -13,7 +13,7 @@ module.exports = Joi.object({
   owner: Joi
       .number()
       .integer()
-      .when('model' || 'producer', { is: true, then: Joi.required() }),
+      .when('model' || 'producer' || 'year' || 'price', { is: true, then: Joi.required() }),
   price: Joi
       .number()
       .min(0),

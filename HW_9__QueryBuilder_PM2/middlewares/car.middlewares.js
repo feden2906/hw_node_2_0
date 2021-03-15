@@ -1,17 +1,14 @@
-const { statusCodes, statusMessages } = require('../constants');
+const { statusCodes } = require('../constants');
 const { ErrorHandler } = require('../helpers');
+const { carValidators } = require('../validators');
 
 module.exports = {
   isModelVal: (req, res, next) => {
     try {
-      const { body: { model }, query: { prefLang = 'en' } } = req;
+      const { error } = carValidators.createCarValidator.validate(req.body);
 
-      if (!model) {
-        throw new ErrorHandler(statusMessages.MODEL_IS_EMPTY[prefLang], statusCodes.BAD_REQUEST);
-      }
-
-      if (!Number.isNaN(+model)) {
-        throw new ErrorHandler(statusMessages.NOT_VALID_MODEL[prefLang], statusCodes.BAD_REQUEST);
+      if (error) {
+        throw new ErrorHandler(error.details[0].message, statusCodes.BAD_REQUEST);
       }
 
       next();
