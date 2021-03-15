@@ -29,7 +29,28 @@ const _filesListSaver = async (filesArr, itemID, itemClass, itemType) => {
   return pathArr;
 };
 
+const _basicQueryBuilder = (query) => {
+  const {
+    limit = 10, page = 1, sortBy = 'createAt', order = 'asc', ...filters
+  } = query;
+
+  const skip = (page - 1) * limit;
+  const orderBy = order === 'asc' ? -1 : 1;
+  const sort = { [sortBy]: orderBy };
+
+  const keys = Object.keys(filters);
+
+  return {
+    filters,
+    keys,
+    params: {
+      limit, page, sort, skip
+    }
+  };
+};
+
 module.exports = {
+  _basicQueryBuilder,
   _filesDirBuilder,
   _filesListSaver
 };

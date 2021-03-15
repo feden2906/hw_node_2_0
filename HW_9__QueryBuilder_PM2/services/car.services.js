@@ -1,28 +1,26 @@
 const Car = require('../models/Car');
+const { utils } = require('../helpers');
 
 module.exports = {
-  findAllCars: (query = {}) => {
-    const { limit = 10, page = 1, sortBy = 'createAt', order = 'asc', ...filters } = query;
+  findAllCars: async (query = {}) => {
+    const { filters, keys, params } = utils._basicQueryBuilder(query);
+    const { limit, page, skip, sort } = params;
 
-    const skip = (page - 1) * limit;
-    const sort = { [sortBy]: order === 'asc' ? -1 : 1 };
-
-    const keys = Object.keys(filters);
     const filterObject = {};
 
     keys.forEach((key) => {
       switch (key) {
         case 'yearGte':
-          filterObject.year = Object.assign({}, filterObject.year, { $gte: filters[key] })
+          filterObject.year = { ...filterObject.year, $gte: filters[key] };
           break;
         case 'yearLte':
-          filterObject.year = Object.assign({}, filterObject.year, { $lte: filters[key] })
+          filterObject.year = { ...filterObject.year, $lte: filters[key] };
           break;
         case 'priceGte':
-          filterObject.price = Object.assign({}, filterObject.price, { $gte: filters[key] })
+          filterObject.price = { ...filterObject.price, $gte: filters[key] };
           break;
         case 'priceLte':
-          filterObject.price = Object.assign({}, filterObject.price, { $lte: filters[key] })
+          filterObject.price = { ...filterObject.price, $lte: filters[key] };
           break;
         case 'producer':
           const producersArr = filters[key].split(';');
@@ -36,7 +34,12 @@ module.exports = {
       }
     });
 
-    return Car.find(filterObject).limit(limit).skip(skip).sort(sort);
+    const data = await Car.find(filterObject).limit(limit).skip(skip).sort(sort);
+    const count = await Car.countDocuments(filterObject);
+
+    return {
+      data, page, limit, count, pages: Math.ceil(count / limit)
+    };
   },
 
   CarById: (userID) => Car.findById(userID),
