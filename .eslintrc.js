@@ -116,6 +116,7 @@ module.exports = {
       'error',
       { functions: false }
     ],
+    'prefer-object-spread': 'warn',
     'no-useless-call': 'error',
     'no-useless-concat': 'error',
     'no-useless-return': 'error',
