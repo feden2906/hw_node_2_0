@@ -15,7 +15,6 @@ module.exports = (() => {
       fs.readdir(modelsPath, ((err, files) => {
         files.forEach((file) => {
           const { name } = path.parse(file);
-          console.log(name)
 
           const modelFile = require(path.join(modelsPath, name));
 
