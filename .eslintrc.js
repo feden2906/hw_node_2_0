@@ -62,7 +62,7 @@ module.exports = {
     'no-plusplus': 'off',
     'no-empty-functions': 'off',
     'consistent-return': 'off',
-    'no-dynamic-require': 'off',
+    // 'no-dynamic-require': 'true',
     'no-eval': 'error',
     'no-extend-native': 'error',
     'no-extra-bind': 'error',

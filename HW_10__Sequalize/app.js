@@ -1,15 +1,17 @@
 const express = require('express');
 const path = require('path');
 const fileUpload = require('express-fileupload');
-const mongoose = require('mongoose');
+
+const db = require('./dataBase').getInstance();
+
 require('dotenv').config({ path: './.env' });
 
+db.setModels();
+
 const { apiRouter } = require('./routers');
-const { config: { PORT, MONGO_URL } } = require('./configs');
+const { PORT } = require('./configs/configs');
 
 const app = express();
-
-_connectDB();
 
 app.use(fileUpload());
 app.use(express.json());
@@ -27,15 +29,3 @@ app.use('*', (err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`server started to ${PORT}`);
 });
-
-function _connectDB() {
-  mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-
-  const { connection } = mongoose;
-
-  connection.on('error', (error) => {
-    if (error) {
-      console.error(error);
-    }
-  });
-}
