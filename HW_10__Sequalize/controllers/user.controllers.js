@@ -5,11 +5,9 @@ const { directoryName: { USERS, DOCS, PHOTOS, VIDEOS }, statusCodes, statusMessa
 const { userService, mailService } = require('../services');
 
 module.exports = {
-  getAllUsers: async (req, res, next) => {
+  getUsers: async (req, res, next) => {
     try {
-      const { prefLang = 'en', ...rest } = req.query;
-
-      const users = await userService.findAllUsers(rest);
+      const users = await userService.findUsers(req.query);
 
       res.json(users);
     } catch (e) {

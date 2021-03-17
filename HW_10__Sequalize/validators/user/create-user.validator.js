@@ -15,7 +15,8 @@ module.exports = Joi.object({
       .required(),
   password: Joi
       .string()
-      .regex(regexpEnum.PASSWORD_REGEXP),
+      .regex(regexpEnum.PASSWORD_REGEXP)
+      .required(),
   phone: Joi
       .string()
       .regex(regexpEnum.PHONE_REGEXP),
@@ -28,7 +29,8 @@ module.exports = Joi.object({
   yearBorn: Joi
       .number()
       .min(constants.CURRENT_YEAR - 100)
-      .max(constants.CURRENT_YEAR - 18),
+      .max(constants.CURRENT_YEAR - 18)
+      .required(),
   cars: Joi
       .array()
 });

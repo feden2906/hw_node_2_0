@@ -26,7 +26,7 @@ module.exports = Joi.object({
       .min(constants.CURRENT_YEAR - 100)
       .max(constants.CURRENT_YEAR - 18),
   isMarried: Joi
-      .boolean(),
+      .any(),
   gender: Joi
       .valid('male', 'female'),
   sortBy: Joi

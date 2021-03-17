@@ -1,12 +1,11 @@
-const { studentService } = require('../services');
+const { carService } = require('../services');
 // const { directoryName: { CARS, DOCS, PHOTOS, VIDEOS }, statusCodes, statusMessages } = require('../constants');
 // const { utils } = require('../helpers');
 
 module.exports = {
-  getStudents: async (req, res, next) => {
+  getCars: async (req, res, next) => {
     try {
-      const obj = {};
-      const cars = await studentService.findAllStudents(obj);
+      const cars = await carService.findCars(req.query);
 
       res.json(cars);
     } catch (e) {

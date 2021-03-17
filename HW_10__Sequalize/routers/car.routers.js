@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
-const { studentControllers } = require('../controllers');
-// const { mwCar, mwFile, mwUrl } = require('../middlewares');
+const { carControllers } = require('../controllers');
+const { mwCar, mwFile, mwUrl } = require('../middlewares');
 
 router.route('/')
     .get(
-        // mwUrl.checkCarQuery,
-        studentControllers.getStudents)
+        mwUrl.checkCarQuery,
+        carControllers.getCars)
 
 //     .post(mwUrl.disableQuery,
 //       mwCar.isModelVal,

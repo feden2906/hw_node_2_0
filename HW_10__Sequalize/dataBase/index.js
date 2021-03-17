@@ -6,7 +6,7 @@ module.exports = (() => {
   let instance;
 
   const initConnection = () => {
-    const client = new Sequelize('sep-2020', 'root', 'root', { dialect: 'mysql' });
+    const client = new Sequelize('users-cars', 'root', 'root', { dialect: 'mysql' });
 
     const models = {};
     const modelsPath = path.join(process.cwd(), 'dataBase', 'models');
