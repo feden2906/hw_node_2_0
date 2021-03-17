@@ -11,6 +11,8 @@ module.exports = {
 
       const tokens = tokenizer();
 
+      await authService.deleteTokens(id);
+
       await authService.saveTokenToBD({ ...tokens, userID: id });
 
       res.json(tokens);
@@ -21,11 +23,13 @@ module.exports = {
 
   updateTokens: async (req, res) => {
     try {
-      const { query: { prefLang = 'en' }, tokens: { userID } } = req;
+      const { userID } = req.tokens;
 
       const tokens = tokenizer();
 
-      await authService.updateTokens(tokens, userID);
+      await authService.deleteTokens(userID);
+
+      await authService.saveTokenToBD({ ...tokens, userID });
 
       res.json(tokens);
     } catch (e) {

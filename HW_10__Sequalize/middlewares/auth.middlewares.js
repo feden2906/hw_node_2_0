@@ -10,7 +10,7 @@ module.exports = {
     try {
       const { tokens, params: { userID }, query: { prefLang = 'en' } } = req;
 
-      if (tokens.userID.id.toString() !== userID.toString()) {
+      if (tokens.userID.toString() !== userID.toString()) {
         throw new ErrorHandler(statusMessages.AUTHORIZATION[prefLang], statusCodes.UNAUTHORIZED);
       }
 
@@ -80,7 +80,9 @@ module.exports = {
         }
       });
 
-      req.tokens = await authService.getTokensByRefresh(refresh_token);
+      const { dataValues } = await authService.getTokensByRefresh(refresh_token) || {};
+
+      req.tokens = dataValues;
       next();
     } catch (e) {
       next(e);

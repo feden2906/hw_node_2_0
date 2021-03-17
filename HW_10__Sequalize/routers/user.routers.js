@@ -20,14 +20,14 @@ router.route('/:userID')
       userControllers.getUserById)
 
     .put(mwUrl.disableQuery,
-      // mwAuth.checkAccessToken,
-      // mwAuth.isAvailable,
+      mwAuth.checkAccessToken,
+      mwAuth.isAvailable,
       mwUser.isUserVal,
       userControllers.updateUser)
 
     .delete(mwUrl.disableQuery,
-      // mwAuth.checkAccessToken,
-      // mwAuth.isAvailable,
+      mwAuth.checkAccessToken,
+      mwAuth.isAvailable,
       userControllers.deleteUser);
 
 router.param('userID', mwUser.findUserById);

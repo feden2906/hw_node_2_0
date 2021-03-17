@@ -4,14 +4,24 @@ module.exports = {
   saveTokenToBD: (authObj) => {
     const O_Auth = db.getModel('O_Auth');
 
-    // console.log(authObj)
     return O_Auth.create(authObj);
   },
 
-  // updateTokens: (tokens, userID) => O_Auth.updateOne({ userID }, { ...tokens, userID }),
+  getTokensByAccess: (access_token) => {
+    const O_Auth = db.getModel('O_Auth');
 
-  // getTokensByAccess: (access_token) => O_Auth.findOne({ access_token }).populate('userID'),
+    return O_Auth.findOne({ access_token });
+  },
 
-  // getTokensByRefresh: (refresh_token) => O_Auth.findOne({ refresh_token }),
+  getTokensByRefresh: (refresh_token) => {
+    const O_Auth = db.getModel('O_Auth');
 
+    return O_Auth.findOne({ refresh_token });
+  },
+
+  deleteTokens: (userID) => {
+    const O_Auth = db.getModel('O_Auth');
+
+    return O_Auth.destroy({ where: { userID } });
+  },
 };

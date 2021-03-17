@@ -25,7 +25,14 @@ module.exports = {
     return User.create(userObject);
   },
 
-  // updateUser: (userID, userObject) => User.findByIdAndUpdate(userID, { $set: userObject }),
-  //
+  updateUser: async (userID, userObject) => {
+    const User = db.getModel('User');
+
+    const record = await User.findOne({ where: { userID }});
+
+    const d = { ...record, ...userObject };
+    d.save();
+  },
+
   // deleteUser: (userID) => User.findByIdAndDelete(userID)
 };
