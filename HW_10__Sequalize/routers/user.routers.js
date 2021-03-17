@@ -7,11 +7,12 @@ router.route('/')
     .get(mwUrl.checkUserQuery,
       userControllers.getUsers)
 
-    .post(mwUrl.disableQuery,
-      mwFile.checkFile,
-      mwFile.checkAvatar,
-      mwUser.isUserExist,
-      mwUser.isUserVal,
+    .post(
+        // mwUrl.disableQuery,
+      // mwFile.checkFile,
+      // mwFile.checkAvatar,
+      // mwUser.isUserExist,
+      // mwUser.isUserVal,
       userControllers.createUser);
 
 router.route('/:userID')

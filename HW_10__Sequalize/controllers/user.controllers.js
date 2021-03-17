@@ -29,32 +29,33 @@ module.exports = {
 
   createUser: async (req, res, next) => {
     try {
+      console.log(1)
       const { avatar, docs, videos, body, body: { name, email, password }, query: { prefLang = 'en' } } = req;
 
       const hashPassword = await passwordHasher.hash(password);
 
       const user = await userService.createUser({ ...body, password: hashPassword });
-      const itemID = user._id.toString();
+      // const itemID = user._id.toString();
 
-      if (avatar) {
-        const { finalPath, pathForDB, fullDirPath } = utils._filesDirBuilder(avatar.name, itemID, USERS, PHOTOS);
+      // if (avatar) {
+      //   const { finalPath, pathForDB, fullDirPath } = utils._filesDirBuilder(avatar.name, itemID, USERS, PHOTOS);
+      //
+      //   await fs.mkdir(fullDirPath, { recursive: true });
+      //   await avatar.mv(finalPath);
+      //   await userService.updateUser(itemID, { avatar: pathForDB });
+      // }
 
-        await fs.mkdir(fullDirPath, { recursive: true });
-        await avatar.mv(finalPath);
-        await userService.updateUser(itemID, { avatar: pathForDB });
-      }
+      // if (docs.length) {
+      //   const pathArr = await utils._filesListSaver(docs, itemID, USERS, DOCS);
+      //   await userService.updateUser(itemID, { docs: pathArr });
+      // }
 
-      if (docs.length) {
-        const pathArr = await utils._filesListSaver(docs, itemID, USERS, DOCS);
-        await userService.updateUser(itemID, { docs: pathArr });
-      }
+      // if (videos.length) {
+      //   const pathArr = await utils._filesListSaver(videos, itemID, USERS, VIDEOS);
+      //   await userService.updateUser(itemID, { docs: pathArr });
+      // }
 
-      if (videos.length) {
-        const pathArr = await utils._filesListSaver(videos, itemID, USERS, VIDEOS);
-        await userService.updateUser(itemID, { docs: pathArr });
-      }
-
-      await mailService.sendMail(email, emailActionsEnum.WELCOME, { name });
+      // await mailService.sendMail(email, emailActionsEnum.WELCOME, { name });
 
       res.status(statusCodes.CREATED).json(statusMessages.USER_IS_CREATED[prefLang]);
     } catch (e) {
