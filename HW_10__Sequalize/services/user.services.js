@@ -7,10 +7,12 @@ module.exports = {
     return User.findAll({ where: query });
   },
 
-  // findUserById: (userID) => User.findById(userID),
-  //
-  // findUser: (findObj) => User.findOne(findObj),
-  //
+  findUserById: (userID) => {
+    const User = db.getModel('User');
+
+    return User.findByPk(userID);
+  },
+
   // createUser: (userObject) => User.create(userObject),
   //
   // updateUser: (userID, userObject) => User.findByIdAndUpdate(userID, { $set: userObject }),

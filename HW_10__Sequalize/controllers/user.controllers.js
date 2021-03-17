@@ -17,9 +17,9 @@ module.exports = {
 
   getUserById: async (req, res, next) => {
     try {
-      const { params: { userID }, query: { prefLang = 'en' } } = req;
+      const { userID } = req.params;
 
-      const user = await userService.findUserById(userID, prefLang);
+      const user = await userService.findUserById(userID);
 
       res.json(user);
     } catch (e) {
