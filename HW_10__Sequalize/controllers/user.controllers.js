@@ -15,11 +15,9 @@ module.exports = {
     }
   },
 
-  getUserById: async (req, res, next) => {
+  getUserById: (req, res, next) => {
     try {
-      const { userID } = req.params;
-
-      const user = await userService.findUserById(userID);
+      const user = req.profile;
 
       res.json(user);
     } catch (e) {
@@ -29,7 +27,6 @@ module.exports = {
 
   createUser: async (req, res, next) => {
     try {
-      console.log(1)
       const { avatar, docs, videos, body, body: { name, email, password }, query: { prefLang = 'en' } } = req;
 
       const hashPassword = await passwordHasher.hash(password);

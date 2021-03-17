@@ -1,7 +1,12 @@
-// const { O_Auth } = require('../models');
+const db = require('../dataBase').getInstance();
 
 module.exports = {
-  // saveTokenToBD: (tokens, userID) => O_Auth.create({ ...tokens, userID }),
+  saveTokenToBD: (authObj) => {
+    const O_Auth = db.getModel('O_Auth');
+
+    // console.log(authObj)
+    return O_Auth.create(authObj);
+  },
 
   // updateTokens: (tokens, userID) => O_Auth.updateOne({ userID }, { ...tokens, userID }),
 

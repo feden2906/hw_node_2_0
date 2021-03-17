@@ -5,13 +5,13 @@ const { authService } = require('../services');
 module.exports = {
   authUser: async (req, res, next) => {
     try {
-      const { body: { password }, query: { prefLang = 'en' }, profile } = req;
+      const { body, query: { prefLang = 'en' }, profile: { id, password } } = req;
 
-      await passwordHasher.compare(password, profile.password, prefLang);
+      await passwordHasher.compare(body.password, password, prefLang);
 
       const tokens = tokenizer();
 
-      await authService.saveTokenToBD(tokens, profile._id);
+      await authService.saveTokenToBD({ ...tokens, userID: id });
 
       res.json(tokens);
     } catch (e) {

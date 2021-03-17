@@ -13,6 +13,12 @@ module.exports = {
     return User.findByPk(userID);
   },
 
+  findUser: (findObj) => {
+    const User = db.getModel('User');
+
+    return User.findOne({ where: findObj });
+  },
+
   createUser: (userObject) => {
     const User = db.getModel('User');
 

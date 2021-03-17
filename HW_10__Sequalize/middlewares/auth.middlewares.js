@@ -24,13 +24,13 @@ module.exports = {
     try {
       const { body: { email }, query: { prefLang = 'en' } } = req;
 
-      const user = await userService.findUser({ email });
+      const { dataValues } = await userService.findUser({ email }) || {};
 
-      if (!user) {
+      if (!dataValues) {
         throw new ErrorHandler(statusMessages.WRONG_EMAIL_OR_PASSWORD[prefLang], statusCodes.BAD_REQUEST);
       }
 
-      req.profile = user;
+      req.profile = dataValues;
       next();
     } catch (e) {
       next(e);
