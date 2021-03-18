@@ -81,7 +81,7 @@ module.exports = {
       const { profile: { email, name }, params: { userID }, query: { prefLang = 'en' } } = req;
 
       await userService.deleteUser(userID);
-      // await mailService.sendMail(email, emailActionsEnum.DELETE_ACCOUNT, { name });
+      await mailService.sendMail(email, emailActionsEnum.DELETE_ACCOUNT, { name });
 
       res.json(statusMessages.USER_WAS_DELETED[prefLang]);
     } catch (e) {

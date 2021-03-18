@@ -38,6 +38,7 @@ module.exports = {
   },
 
   checkAccessToken: async (req, res, next) => {
+
     try {
       const { prefLang = 'en' } = req.query;
       const access_token = req.get(constants.AUTHORIZATION);

@@ -7,8 +7,7 @@ router.route('/')
     .get(mwUrl.checkUserQuery,
       userControllers.getUsers)
 
-    .post(
-      mwUrl.disableQuery,
+    .post(mwUrl.disableQuery,
       // mwFile.checkFile,
       // mwFile.checkAvatar,
       mwUser.isUserExist,
