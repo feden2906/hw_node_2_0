@@ -4,7 +4,7 @@ const fileUpload = require('express-fileupload');
 
 const db = require('./dataBase').getInstance();
 
-require('dotenv').config({ path: './.env' });
+require('dotenv').config();
 
 db.setModels();
 
