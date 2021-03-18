@@ -1,7 +1,11 @@
 const fs = require('fs-extra').promises;
 
-const { passwordHasher, utils } = require('../helpers');
-const { directoryName: { USERS, DOCS, PHOTOS, VIDEOS }, statusCodes, statusMessages, emailActionsEnum } = require('../constants');
+const { passwordHasher } = require('../helpers');
+const {
+  directoryName: {
+    USERS, DOCS, PHOTOS, VIDEOS
+  }, statusCodes, statusMessages, emailActionsEnum
+} = require('../constants');
 const { userService, mailService } = require('../services');
 
 module.exports = {
@@ -62,18 +66,17 @@ module.exports = {
 
   updateUser: async (req, res, next) => {
     try {
-      const { body, body: { name, email, password }, params: { userID }, query: { prefLang = 'en' } } = req;
+      const {
+        body, body: { name, email, password }, params: { userID }, query: { prefLang = 'en' }
+      } = req;
 
       const hashPassword = await passwordHasher.hash(password);
 
       await userService.updateUser(userID, { ...body, password: hashPassword });
-      // console.log(userID)
-      const tokens = await utils._saveTokensToBD(+userID);
 
       await mailService.sendMail(email, emailActionsEnum.CHANGE_INFO, { name });
 
-      res.json(tokens);
-      // res.json(statusMessages.USER_WAS_UPDATE[prefLang]);
+      res.json(statusMessages.USER_WAS_UPDATE[prefLang]);
     } catch (e) {
       next(e);
     }
@@ -84,6 +87,7 @@ module.exports = {
       const { profile: { email, name }, params: { userID }, query: { prefLang = 'en' } } = req;
 
       await userService.deleteUser(userID);
+
       await mailService.sendMail(email, emailActionsEnum.DELETE_ACCOUNT, { name });
 
       res.json(statusMessages.USER_WAS_DELETED[prefLang]);
