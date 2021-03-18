@@ -1,8 +1,10 @@
 const db = require('../dataBase').getInstance();
 
+const { CAR } = require('../constants/modelNames.enum');
+
 module.exports = {
   findCars: (query) => {
-    const Car = db.getModel('Car');
+    const Car = db.getModel(CAR);
 
     return Car.findAll({ where: query });
   }
