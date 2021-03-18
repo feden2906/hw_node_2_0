@@ -31,5 +31,10 @@ module.exports = {
     await User.update(userObject, { where: { id: userID } });
   },
 
-  // deleteUser: (userID) => User.findByIdAndDelete(userID)
+  deleteUser: async (userID) => {
+    const User = db.getModel('User');
+    const q = await User.destroy({ where: { id: userID } });
+    console.log(q);
+    // return User.destroy({ where: { id: userID } });
+  }
 };

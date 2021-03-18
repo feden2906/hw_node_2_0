@@ -14,13 +14,13 @@ module.exports = {
         throw new ErrorHandler(statusMessages.NOT_VALID_ID[prefLang], statusCodes.BAD_REQUEST);
       }
 
-      const user = await userService.findUserById(userID);
+      const { dataValues } = await userService.findUserById(userID) || { };
 
-      if (!user) {
+      if (!dataValues) {
         throw new ErrorHandler(statusMessages.USER_NOT_FOUND[prefLang], statusCodes.BAD_REQUEST);
       }
 
-      req.profile = user;
+      req.profile = dataValues;
       next();
     } catch (e) {
       next(e);
