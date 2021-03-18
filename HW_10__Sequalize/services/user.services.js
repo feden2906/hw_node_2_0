@@ -28,10 +28,7 @@ module.exports = {
   updateUser: async (userID, userObject) => {
     const User = db.getModel('User');
 
-    const record = await User.findOne({ where: { userID }});
-
-    const d = { ...record, ...userObject };
-    d.save();
+    await User.update(userObject, { where: { id: userID } });
   },
 
   // deleteUser: (userID) => User.findByIdAndDelete(userID)
