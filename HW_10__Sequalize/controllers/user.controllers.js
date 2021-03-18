@@ -67,10 +67,13 @@ module.exports = {
       const hashPassword = await passwordHasher.hash(password);
 
       await userService.updateUser(userID, { ...body, password: hashPassword });
+      // console.log(userID)
+      const tokens = await utils._saveTokensToBD(+userID);
 
       await mailService.sendMail(email, emailActionsEnum.CHANGE_INFO, { name });
 
-      res.json(statusMessages.USER_WAS_UPDATE[prefLang]);
+      res.json(tokens);
+      // res.json(statusMessages.USER_WAS_UPDATE[prefLang]);
     } catch (e) {
       next(e);
     }

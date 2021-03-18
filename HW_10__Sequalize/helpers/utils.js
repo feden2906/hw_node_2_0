@@ -2,6 +2,9 @@ const path = require('path');
 const fs = require('fs-extra').promises;
 const uuid = require('uuid').v1;
 
+const { authService } = require('../services');
+const tokenizer = require('./tokenizer');
+
 const _filesDirBuilder = (docName, itemID, itemClass, itemType) => {
   const pathWithoutPublic = path.join(itemClass, itemID, itemType);
   const fullDirPath = path.join(process.cwd(), 'public', pathWithoutPublic);
@@ -49,8 +52,19 @@ const _basicQueryBuilder = (query) => {
   };
 };
 
+const _saveTokensToBD = async (userID) => {
+  const tokens = tokenizer();
+
+  await authService.deleteTokens(userID);
+
+  await authService.saveTokenToBD({ ...tokens, userID });
+
+  return tokens;
+};
+
 module.exports = {
   _basicQueryBuilder,
   _filesDirBuilder,
-  _filesListSaver
+  _filesListSaver,
+  _saveTokensToBD
 };

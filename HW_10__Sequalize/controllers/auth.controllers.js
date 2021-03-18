@@ -1,6 +1,5 @@
-const { passwordHasher, tokenizer } = require('../helpers');
+const { utils, passwordHasher } = require('../helpers');
 const { statusCodes } = require('../constants');
-const { authService } = require('../services');
 
 module.exports = {
   authUser: async (req, res, next) => {
@@ -9,11 +8,7 @@ module.exports = {
 
       await passwordHasher.compare(body.password, password, prefLang);
 
-      const tokens = tokenizer();
-
-      await authService.deleteTokens(id);
-
-      await authService.saveTokenToBD({ ...tokens, userID: id });
+      const tokens = await utils._saveTokensToBD(id);
 
       res.json(tokens);
     } catch (e) {
@@ -25,11 +20,7 @@ module.exports = {
     try {
       const { userID } = req.tokens;
 
-      const tokens = tokenizer();
-
-      await authService.deleteTokens(userID);
-
-      await authService.saveTokenToBD({ ...tokens, userID });
+      const tokens = await utils._saveTokensToBD(userID);
 
       res.json(tokens);
     } catch (e) {
