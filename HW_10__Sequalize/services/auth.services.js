@@ -10,13 +10,13 @@ module.exports = {
   getTokensByAccess: (access_token) => {
     const O_Auth = db.getModel('O_Auth');
 
-    return O_Auth.findOne({ access_token });
+    return O_Auth.findOne({ where: { access_token } });
   },
 
   getTokensByRefresh: (refresh_token) => {
     const O_Auth = db.getModel('O_Auth');
 
-    return O_Auth.findOne({ refresh_token });
+    return O_Auth.findOne({ where: { refresh_token } });
   },
 
   deleteTokens: (userID) => {

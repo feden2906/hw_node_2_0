@@ -52,13 +52,13 @@ module.exports = {
         }
       });
 
-      const tokens = await authService.getTokensByAccess(access_token);
+      const { dataValues } = await authService.getTokensByAccess(access_token);
 
-      if (!tokens) {
+      if (!dataValues) {
         throw new ErrorHandler(statusMessages.TOKEN_NOT_VALID[prefLang], statusCodes.BAD_REQUEST);
       }
 
-      req.tokens = tokens;
+      req.tokens = dataValues;
       next();
     } catch (e) {
       next(e);
