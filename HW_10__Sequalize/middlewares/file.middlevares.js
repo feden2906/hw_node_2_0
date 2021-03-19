@@ -2,12 +2,7 @@ const { ErrorHandler } = require('../helpers');
 const { statusMessages, statusCodes } = require('../constants');
 const { AVATAR } = require('../constants/constants');
 const {
-  DOC_MIMETYPES,
-  DOC_MAX_SIZE,
-  PHOTO_MAX_SIZE,
-  PHOTO_MIMETYPES,
-  VIDEO_MAX_SIZE,
-  VIDEO_MIMETYPES
+  DOC_MIMETYPES, DOC_MAX_SIZE, PHOTO_MAX_SIZE, PHOTO_MIMETYPES, VIDEO_MAX_SIZE, VIDEO_MIMETYPES
 } = require('../constants/constants');
 
 module.exports = {
