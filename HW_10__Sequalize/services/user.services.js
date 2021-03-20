@@ -36,6 +36,6 @@ module.exports = {
   deleteUser: async (userID) => {
     const User = db.getModel(USER);
 
-    await User.destroy({ where: { id: userID } });  // TODO  HEEEEEEEEELP
+    await User.destroy({ where: { id: userID } });
   }
 };
